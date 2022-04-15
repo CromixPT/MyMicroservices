@@ -8,8 +8,18 @@ public class CatalogContext : ICatalogContext
 
     public CatalogContext(IConfiguration configuration)
     {
-        var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
-        var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+
+        var connectionString = configuration.GetValue<string>("DatabaseSettings:Host");
+        var port = configuration.GetValue<int>("DatabaseSettings:Port");
+
+        var settings = new MongoClientSettings()
+        {
+            WriteConcern = WriteConcern.Acknowledged,
+            Server = new MongoServerAddress(connectionString,port)
+        };
+        
+        var client = new MongoClient(settings);
+        var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
 
 
         Products = database.GetCollection<Product>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
@@ -38,7 +48,6 @@ public static class CatalogContextSeed
             {
                 new Product()
                 {
-                    Id = "602d2149e773f2a3990b47f5",
                     Name = "IPhone X",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
@@ -48,7 +57,6 @@ public static class CatalogContextSeed
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a3990b47f6",
                     Name = "Samsung 10",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
@@ -58,7 +66,6 @@ public static class CatalogContextSeed
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a3990b47f7",
                     Name = "Huawei Plus",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
@@ -68,7 +75,6 @@ public static class CatalogContextSeed
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a3990b47f8",
                     Name = "Xiaomi Mi 9",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
@@ -78,7 +84,6 @@ public static class CatalogContextSeed
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a3990b47f9",
                     Name = "HTC U11+ Plus",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
@@ -88,7 +93,6 @@ public static class CatalogContextSeed
                 },
                 new Product()
                 {
-                    Id = "602d2149e773f2a3990b47fa",
                     Name = "LG G7 ThinQ",
                     Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",

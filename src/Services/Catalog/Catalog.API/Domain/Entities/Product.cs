@@ -7,7 +7,7 @@ public class Product
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     [BsonElement("Name")]
     public string Name { get; set; }
@@ -16,4 +16,5 @@ public class Product
     public string Description { get; set; }
     public string ImageFile { get; set; }
     public decimal Price { get; set; }
+    
 }
