@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  catalog.db.ui:
+    container_name: catalogdb.ui
+    ports:
+     - "3000:3000"
+    depends_on:
+      - catalog.db
+    volumes:
+      - mongo_ui:/data/db
+  catalog.db:
+    container_name: catalog.db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "MongoDb__Host=catalog.db"
+    ports:
+      - "5000:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    depends_on:
+      - catalog.db

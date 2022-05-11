@@ -8,9 +8,8 @@ public class CatalogContext : ICatalogContext
 
     public CatalogContext(IConfiguration configuration)
     {
-
-        var connectionString = configuration.GetValue<string>("DatabaseSettings:Host");
-        var port = configuration.GetValue<int>("DatabaseSettings:Port");
+        var connectionString = configuration.GetValue<string>("MongoDb:Host");
+        var port = configuration.GetValue<int>("MongoDb:Port");
 
         var settings = new MongoClientSettings()
         {
@@ -19,10 +18,10 @@ public class CatalogContext : ICatalogContext
         };
         
         var client = new MongoClient(settings);
-        var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
+        var database = client.GetDatabase(configuration.GetValue<string>("MongoDb:DatabaseName"));
 
 
-        Products = database.GetCollection<Product>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
+        Products = database.GetCollection<Product>(configuration.GetValue<string>("MongoDb:CollectionName"));
 
         CatalogContextSeed.SeedData(Products);
     }
