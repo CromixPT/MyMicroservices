@@ -21,7 +21,7 @@ public class BasketRepository : IBasketRepository
         return JsonSerializer.Deserialize<ShoppingCart>(basket);
     }
 
-    public async Task<ShoppingCart> UpdateBasketGetCart(ShoppingCart basketCart)
+    public async Task<ShoppingCart> UpdateBasket(ShoppingCart basketCart)
     {
         var value = JsonSerializer.Serialize(basketCart);
         await _cache.SetStringAsync(basketCart.Username, value);
@@ -29,7 +29,7 @@ public class BasketRepository : IBasketRepository
         return await GetBasket(basketCart.Username);
     }
 
-    public async Task DeleteBasketGetCart(string userName)
+    public async Task DeleteBasket(string userName)
     {
         await _cache.RemoveAsync(userName);
     }
