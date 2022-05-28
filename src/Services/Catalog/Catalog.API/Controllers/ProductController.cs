@@ -5,7 +5,7 @@ using MyMicroServices.Catalog.API.Repositories;
 namespace MyMicroServices.Catalog.API.Controllers;
 
 [ApiController]
-[Route("v1/[controller]/")]
+[Route("api/v1/[controller]/")]
 public class ProductController : ControllerBase
 {
     private readonly IProductRepository _repository;
