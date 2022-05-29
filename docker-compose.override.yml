@@ -1,6 +1,18 @@
 version: '3.4'
 
 services:
+  pgadmin:
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=SuperSecret
+    depends_on:
+      - discount.db
+    volumes:
+      - pgadmin_data:/root/.pgadmin
   portainer:
     container_name: portainer
     restart: always
@@ -50,4 +62,16 @@ services:
       - basket.db
     ports:
       - "8001:80"
+  discount.db:
+    container_name: discount.db
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=DiscountDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 

@@ -1,6 +1,8 @@
 version: '3.4'
 
 services:
+  pgadmin:
+    image: dpage/pgadmin4
   portainer:
     image: portainer/portainer-ce
   catalog.db.ui:
@@ -19,8 +21,11 @@ services:
       dockerfile: src/Services/Basket/Basket.API/Dockerfile
   basket.db:
     image: redis:alpine
-
+  discount.db:
+    image: postgres
 volumes:
   mongo_data:
   mongo_ui:
   portainer_data:
+  postgres_data:
+  pgadmin_data:
