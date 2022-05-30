@@ -73,5 +73,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DiscountDb=Server=discount.db;Port=5432;Database=DiscountDb;Username=admin;Password=admin1234;
+    ports:
+      - "8002:80"
+    depends_on:
+        - discount.db

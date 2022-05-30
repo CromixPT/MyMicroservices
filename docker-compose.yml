@@ -23,9 +23,16 @@ services:
     image: redis:alpine
   discount.db:
     image: postgres
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: src/Services/Discount/Discount.API/Dockerfile
+
 volumes:
   mongo_data:
   mongo_ui:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
